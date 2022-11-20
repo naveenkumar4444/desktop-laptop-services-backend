@@ -19,7 +19,10 @@ mongoose.connect("mongodb+srv://ecom:ecom@cluster0.a4pfgbe.mongodb.net/helpdesk?
 })
 
 app.get('/', (req, res) => {
-    res.send({ message: "Hello World1" })
+    res.status(200).json({
+        title: "Express Testing",
+        message: "The app is working properly!",
+    });
 })
 
 app.use('/user', UsersRoutes)
