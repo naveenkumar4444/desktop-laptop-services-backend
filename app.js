@@ -1,11 +1,14 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 
 const app = express()
 
 app.use(express.json({ limit: "5mb" }))
 app.use(cors())
+app.use('/', express.static(__dirname + '/public'));
+app.use('*', express.static(__dirname + '/public'));
 
 const PORT = 8000;
 
@@ -18,19 +21,13 @@ mongoose.connect("mongodb+srv://ecom:ecom@cluster0.a4pfgbe.mongodb.net/helpdesk?
     console.log(error);
 })
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        title: "Express Testing",
-        message: "The app is working properly!",
-    });
-})
-
 app.use('/user', UsersRoutes)
 app.use('/complaint', ComplaintRoutes)
 
-app.use('*', () => {
-    console.log("Route not available");
-})
+// app.get("*", (req, res) => {
+//     console.log("Hello World");
+//     res.status(200).json({ message: "Hello World" })
+// })
 
 app.listen(process.env.PORT || PORT, () => {
     console.log("Running on port ", PORT);

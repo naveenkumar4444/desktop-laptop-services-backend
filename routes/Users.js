@@ -81,7 +81,7 @@ router.post('/getallusers', verifyTokenAndAdmin, async (request, response) => {
 
         const user = await UserModel.find(condition)
 
-        user.password = CryptoJS.AES.decrypt(user.password, config.SEC_KEY).toString(CryptoJS.enc.Utf8)
+        // user.password = CryptoJS.AES.decrypt(user.password, config.SEC_KEY).toString(CryptoJS.enc.Utf8)
 
         response.status(200).send({
             status: true,
@@ -90,6 +90,7 @@ router.post('/getallusers', verifyTokenAndAdmin, async (request, response) => {
         })
 
     } catch (error) {
+        console.log(error);
         response.status(500).send({
             status: false,
             message: 'Error Found',
