@@ -41,18 +41,28 @@ router.post('/login', async (request, response) => {
         const body = request.body
 
         const user = await UserModel.findOne({ email: body.email });
-        !user && response.status(401).json("Wrong Credentials");
+        !user && response.status(401).json({
+            status: false,
+            message: "Wrong Credentials",
+        });
 
         const hashedPassword = CryptoJS.AES.decrypt(user.password, config.SEC_KEY).toString(CryptoJS.enc.Utf8);
 
-        body.password !== hashedPassword && response.status(401).json("Wrong Credentials");
+        body.password !== hashedPassword && response.status(401).json({
+            status: false,
+            message: "Wrong Credentials",
+        });
 
         const { password, ...newUser } = user["_doc"];
 
         const authToken = jwt.sign({
             id: newUser._id,
             role: newUser.role,
-        }, config.JWT_SEC_KEY);
+        },
+            config.JWT_SEC_KEY,
+            {
+                expiresIn: '24h',
+            });
 
         response.status(200).send({
             status: true,
@@ -158,5 +168,30 @@ router.post("/delete", verifyTokenAndAdmin, async (request, response) => {
     }
 
 });
+
+router.post('/verify', (request, response) => {
+    const authToken = request.headers.token;
+    if (authToken) {
+        jwt.verify(authToken, config.JWT_SEC_KEY, (error) => {
+            if (error) {
+                return response.status(403).json({
+                    status: false,
+                    message: "You are not authenticated."
+                });
+            }
+
+            return response.status(200).json({
+                status: true,
+                message: "User verified."
+            });
+
+        });
+    } else {
+        return response.status(401).json({
+            status: false,
+            message: "You are not authenticated."
+        });
+    }
+})
 
 module.exports = router

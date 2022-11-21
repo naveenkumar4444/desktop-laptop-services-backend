@@ -6,13 +6,19 @@ const verifyToken = (request, response, next) => {
     if (authToken) {
         jwt.verify(authToken, config.JWT_SEC_KEY, (error, user) => {
             if (error) {
-                return response.status(403).json("You are not authenticated.");
+                return response.status(403).json({
+                    status: false,
+                    message:"You are not authenticated."
+                });
             }
             request.user = user;
             next();
         });
     } else {
-        return response.status(401).json("You are not authenticated.");
+        return response.status(401).json({
+            status: false,
+            message:"You are not authenticated."
+        });
     }
 }
 
