@@ -27,7 +27,7 @@ router.post('/add', async (request, response) => {
 
 })
 
-router.post('/getallcomplaints', async (request, response) => {
+router.post('/getallcomplaints', verifyTokenAndAuthorization, async (request, response) => {
     try {
 
         const condition = {}
@@ -37,6 +37,9 @@ router.post('/getallcomplaints', async (request, response) => {
         }
         if (request.body.userId && request.body.userId.length) {
             condition.userId = request.body.userId
+        }
+        if (request.body.status && request.body.status.length) {
+            condition.status = request.body.status
         }
 
         const complaint = await ComplaintModel.find(condition)
