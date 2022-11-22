@@ -9,10 +9,11 @@ const ComplaintSchema = new mongoose.Schema({
     history: [],
     address: { type: String, trim: true, required: true },
     status: { type: String, trim: true, required: false, default: "pending" },
-    engineer: {},
+    engineer: [],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: false,
+        trim: true,
+        required: true,
         ref: "Users",
     },
 }, { timestamps: true })
