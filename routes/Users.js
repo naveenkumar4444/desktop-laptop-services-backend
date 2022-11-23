@@ -189,8 +189,8 @@ router.post('/resetLink', async (request, response) => {
                 expiresIn: 120,
             });
 
-        // const link = `https://desktop-laptop-services-frontend.vercel.app/resetPassword/${token}/${user._id}`
-        const link = `http://localhost:3000/resetPassword/${token}/${user._id}`
+        const link = `https://desktop-laptop-services-frontend.vercel.app/resetPassword/${token}/${user._id}`
+        // const link = `http://localhost:3000/resetPassword/${token}/${user._id}`
 
         sendMail(user.email, link)
 
