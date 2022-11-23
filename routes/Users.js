@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const config = require('../config')
 
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../auth/verifyToken");
+const { sendMail } = require('../sendMail');
 
 router.post('/register', async (request, response) => {
 
@@ -168,6 +169,90 @@ router.post("/delete", verifyTokenAndAdmin, async (request, response) => {
     }
 
 });
+
+router.post('/resetLink', async (request, response) => {
+    try {
+        const body = request.body
+
+        const user = await UserModel.findOne({ email: body.email })
+
+        !user && response.status(404).send({
+            status: false,
+            message: 'User not found'
+        })
+
+        const token = jwt.sign({
+            email: body.email,
+        },
+            config.JWT_SEC_KEY,
+            {
+                expiresIn: 120,
+            });
+
+        // const link = `https://desktop-laptop-services-frontend.vercel.app/resetPassword/${token}/${user._id}`
+        const link = `http://localhost:3000/resetPassword/${token}/${user._id}`
+
+        sendMail(user.email, link)
+
+        response.status(200).send({
+            status: true,
+            message: 'Password reset link has sent'
+        })
+
+    } catch (error) {
+        response.status(500).send({
+            status: false,
+            message: error
+        })
+    }
+})
+
+router.post('/resetPassword', async (request, response) => {
+    try {
+        const body = request.body
+
+        // jwt.verify(body.token, config.JWT_SEC_KEY, (error) => {
+        //     if (error) {
+        //         return response.status(403).json({
+        //             status: false,
+        //             message: "Token expired"
+        //         });
+        //     }
+
+        //     const newpassword = CryptoJS.AES.encrypt(body.password, config.SEC_KEY).toString()
+
+        //     UserModel.findByIdAndUpdate(body.id, {
+        //         password: newpassword
+        //     }, { new: true }).then((err) => {
+        //         if (err) {
+        //             console.log("err");
+        //             return response.status(403).json({
+        //                 status: false,
+        //                 message: "Token expired"
+        //             });
+        //         }
+        //     })
+
+        await jwt.verify(body.token, config.JWT_SEC_KEY)
+
+        const newpassword = CryptoJS.AES.encrypt(body.password, config.SEC_KEY).toString()
+
+        await UserModel.findByIdAndUpdate(body.id, {
+            password: newpassword
+        }, { new: true })
+
+        response.status(200).send({
+            status: true,
+            message: 'Password reset link has sent'
+        })
+
+    } catch (error) {
+        response.status(500).send({
+            status: false,
+            message: 'Token expired'
+        })
+    }
+})
 
 router.post('/verify', (request, response) => {
     const authToken = request.headers.token;
