@@ -110,25 +110,26 @@ router.post('/getallusers', verifyTokenAndAdmin, async (request, response) => {
     }
 })
 
-// router.post('/:id', verifyToken, async (request, response) => {
-//     try {
+router.post('/userById', verifyToken, async (request, response) => {
+    try {
 
-//         const data = await UserModel.findById(request.params.id)
-//         const { password, ...newData } = data["_doc"];
-//         response.status(200).send({
-//             status: true,
-//             message: 'Success',
-//             data: newData
-//         })
+        const body = request.body
+        const data = await UserModel.findById(body.id)
+        const { password, ...newData } = data["_doc"];
+        response.status(200).send({
+            status: true,
+            message: 'Success',
+            data: newData
+        })
 
-//     } catch (error) {
-//         response.status(500).send({
-//             status: false,
-//             message: 'Error Found',
-//             error: error
-//         })
-//     }
-// })
+    } catch (error) {
+        response.status(500).send({
+            status: false,
+            message: 'Error Found',
+            error: error
+        })
+    }
+})
 
 router.post('/update', verifyToken, async (request, response) => {
     try {
