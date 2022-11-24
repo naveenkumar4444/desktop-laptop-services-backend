@@ -10,6 +10,7 @@ const ComplaintSchema = new mongoose.Schema({
     address: { type: String, trim: true, required: true },
     status: { type: String, trim: true, required: false, default: "pending" },
     engineer: [],
+    deleted: { type: Boolean, trim: true, required: false, default: false },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         trim: true,
