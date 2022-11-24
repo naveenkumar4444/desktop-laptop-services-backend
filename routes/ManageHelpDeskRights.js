@@ -42,8 +42,8 @@ router.post('/read', async (request, response) => {
 
         response.status(200).send({
             status: true,
-            message: 'Rights added',
-            data: rights
+            message: 'Rights',
+            data: rights[0]
         })
 
     } catch (error) {
