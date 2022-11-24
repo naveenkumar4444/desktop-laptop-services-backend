@@ -62,7 +62,7 @@ router.post('/update', async (request, response) => {
 
         const body = request.body
 
-        const rights = await RightsModel.findByIdAndUpdate(body.id, {
+        const rights = await RightsModel.findByIdAndUpdate(body._id, {
             $set: request.body
         }, { new: true })
 
