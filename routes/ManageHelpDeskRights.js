@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const RightsModel = require('../models/ManageHelpDeskRights')
 
-router.post('/create', async (request, response) => {
+const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../auth/verifyToken");
+
+router.post('/create', verifyTokenAndAdmin, async (request, response) => {
 
     try {
 
@@ -34,7 +36,7 @@ router.post('/create', async (request, response) => {
 
 })
 
-router.post('/read', async (request, response) => {
+router.post('/read', verifyTokenAndAdmin, async (request, response) => {
 
     try {
 
@@ -56,7 +58,7 @@ router.post('/read', async (request, response) => {
 
 })
 
-router.post('/update', async (request, response) => {
+router.post('/update', verifyTokenAndAdmin, async (request, response) => {
 
     try {
 
@@ -82,7 +84,7 @@ router.post('/update', async (request, response) => {
 
 })
 
-router.post('/delete', async (request, response) => {
+router.post('/delete', verifyTokenAndAdmin, async (request, response) => {
 
     try {
 
