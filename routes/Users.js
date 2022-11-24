@@ -42,14 +42,14 @@ router.post('/login', async (request, response) => {
         const body = request.body
 
         const user = await UserModel.findOne({ email: body.email });
-        !user && response.status(401).json({
+        (!user || user.deactivated) && response.status(401).json({
             status: false,
             message: "Wrong Credentials",
         });
 
         const hashedPassword = CryptoJS.AES.decrypt(user.password, config.SEC_KEY).toString(CryptoJS.enc.Utf8);
 
-        body.password !== hashedPassword && response.status(401).json({
+        (body.password !== hashedPassword || user.deactivated) && response.status(401).json({
             status: false,
             message: "Wrong Credentials",
         });
