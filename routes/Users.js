@@ -81,7 +81,7 @@ router.post('/login', async (request, response) => {
 
 })
 
-router.post('/getallusers', verifyTokenAndAdmin, async (request, response) => {
+router.post('/getallusers', verifyToken, async (request, response) => {
     try {
 
         const condition = {}
@@ -153,7 +153,7 @@ router.post('/update', verifyToken, async (request, response) => {
     }
 })
 
-router.post("/delete", verifyTokenAndAdmin, async (request, response) => {
+router.post("/delete", verifyToken, async (request, response) => {
 
     try {
         await UserModel.findByIdAndDelete(request.body.id);
