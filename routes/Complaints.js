@@ -30,16 +30,22 @@ router.post('/add', verifyToken, async (request, response) => {
 router.post('/getallcomplaints', verifyToken, async (request, response) => {
     try {
 
-        const condition = {}
+        const condition = { }
+        const body = request.body
 
-        if (request.body.id && request.body.id.length) {
-            condition._id = request.body.id
+        if (request.body.id && body.id.length) {
+            condition._id = body.id
         }
-        if (request.body.userId && request.body.userId.length) {
-            condition.userId = request.body.userId
+        if (request.body.type && body.type.length) {
+            if (type === 'user') {
+                condition.userId = body.userId
+            }
+            if (type === 'engineer') {
+                condition.engineerId = body.userId
+            }
         }
-        if (request.body.status && request.body.status.length) {
-            condition.status = request.body.status
+        if (request.body.status && body.status.length) {
+            condition.status = body.status
         }
 
         const complaint = await ComplaintModel.find(condition)
