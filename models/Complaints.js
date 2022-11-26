@@ -20,8 +20,9 @@ const ComplaintSchema = new mongoose.Schema({
     engineerId: {
         type: mongoose.Schema.Types.ObjectId,
         trim: true,
-        required: true,
+        required: false,
         ref: "Users",
+        default: ""
     },
 }, { timestamps: true })
 
