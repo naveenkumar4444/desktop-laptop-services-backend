@@ -17,13 +17,6 @@ const ComplaintSchema = new mongoose.Schema({
         required: true,
         ref: "Users",
     },
-    engineerId: {
-        type: mongoose.Schema.Types.ObjectId,
-        trim: true,
-        required: false,
-        ref: "Users",
-        default: ""
-    },
 }, { timestamps: true })
 
 module.exports = mongoose.model("Complaints", ComplaintSchema)
