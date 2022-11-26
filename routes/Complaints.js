@@ -3,7 +3,7 @@ const ComplaintModel = require('../models/Complaints')
 
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../auth/verifyToken");
 
-router.post('/add', verifyTokenAndAuthorization, async (request, response) => {
+router.post('/add', verifyToken, async (request, response) => {
 
     try {
 
@@ -27,7 +27,7 @@ router.post('/add', verifyTokenAndAuthorization, async (request, response) => {
 
 })
 
-router.post('/getallcomplaints', verifyTokenAndAuthorization, async (request, response) => {
+router.post('/getallcomplaints', verifyToken, async (request, response) => {
     try {
 
         const condition = {}
@@ -59,7 +59,7 @@ router.post('/getallcomplaints', verifyTokenAndAuthorization, async (request, re
     }
 })
 
-router.post('/update', verifyTokenAndAuthorization, async (request, response) => {
+router.post('/update', verifyToken, async (request, response) => {
     try {
 
         const complaint = await ComplaintModel.findByIdAndUpdate(request.body.id, {
@@ -81,7 +81,7 @@ router.post('/update', verifyTokenAndAuthorization, async (request, response) =>
     }
 })
 
-router.post("/delete", verifyTokenAndAuthorization, async (request, response) => {
+router.post("/delete", verifyToken, async (request, response) => {
 
     try {
         await ComplaintModel.findByIdAndDelete(request.body.id);
