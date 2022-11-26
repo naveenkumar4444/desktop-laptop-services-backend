@@ -30,18 +30,20 @@ router.post('/add', verifyToken, async (request, response) => {
 router.post('/getallcomplaints', verifyToken, async (request, response) => {
     try {
 
-        const condition = { }
+        const condition = {}
         const body = request.body
 
         if (request.body.id && body.id.length) {
             condition._id = body.id
         }
-        if (request.body.type && body.type.length) {
-            if (type === 'user') {
+        if (body.type && body.type.length) {
+            if (body.type === 'user') {
                 condition.userId = body.userId
             }
-            if (type === 'engineer') {
+            else if (body.type === 'engineer') {
                 condition.engineerId = body.userId
+            } else {
+                // console.log(condition);
             }
         }
         if (request.body.status && body.status.length) {
@@ -49,7 +51,7 @@ router.post('/getallcomplaints', verifyToken, async (request, response) => {
         }
 
         const complaint = await ComplaintModel.find(condition)
-
+        console.log(condition);
         response.status(200).send({
             status: true,
             message: 'Success',
