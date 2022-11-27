@@ -28,7 +28,7 @@ function sendMail(email, link) {
     client.sendMail(
         {
             from: "naveenkumar00004444@gmail.com",
-            to: "kiyeb64047@turuma.com",
+            to: email,
             subject: "Reset Password",
             html: compiledTemplate(payload),
         }, (err) => {
