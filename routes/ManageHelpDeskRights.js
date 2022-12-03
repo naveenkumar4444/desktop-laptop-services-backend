@@ -36,7 +36,7 @@ router.post('/create', verifyTokenAndAdmin, async (request, response) => {
 
 })
 
-router.post('/read', verifyTokenAndAuthorization, async (request, response) => {
+router.post('/read', verifyToken, async (request, response) => {
 
     try {
 
