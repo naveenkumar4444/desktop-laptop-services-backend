@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const ComplaintSchema = new mongoose.Schema({
     name: { type: String, trim: true, required: true },
+    price: { type: String, trim: true, required: true },
     description: { type: String, trim: true, required: true },
     model_number: { type: String, trim: true, required: true },
     serial_number: { type: String, trim: true, required: false, default: "" },
