@@ -8,6 +8,7 @@ const ComplaintSchema = new mongoose.Schema({
     serial_number: { type: String, trim: true, required: false, default: "" },
     images: [],
     history: [],
+    payments: [],
     address: { type: String, trim: true, required: true },
     status: { type: String, trim: true, required: false, default: "pending" },
     engineer: [],

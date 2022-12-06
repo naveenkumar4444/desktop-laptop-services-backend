@@ -15,6 +15,7 @@ const PORT = 8000;
 const UsersRoutes = require('./routes/Users')
 const ComplaintRoutes = require('./routes/Complaints')
 const ManageHelpDeskRoutes = require('./routes/ManageHelpDeskRights')
+const PaymentRoutes = require('./routes/Payments')
 
 mongoose.connect("mongodb+srv://ecom:ecom@cluster0.a4pfgbe.mongodb.net/helpdesk?retryWrites=true&w=majority").then(() => {
     console.log("Connected");
@@ -25,6 +26,7 @@ mongoose.connect("mongodb+srv://ecom:ecom@cluster0.a4pfgbe.mongodb.net/helpdesk?
 app.use('/user', UsersRoutes)
 app.use('/complaint', ComplaintRoutes)
 app.use('/rights', ManageHelpDeskRoutes)
+app.use('/payment', PaymentRoutes)
 
 // app.get("*", (req, res) => {
 //     console.log("Hello World");
