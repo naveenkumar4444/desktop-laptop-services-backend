@@ -9,9 +9,11 @@ const ComplaintSchema = new mongoose.Schema({
     images: [],
     history: [],
     payments: [],
+    mobile: { type: String, trim: true, required: true },
     address: { type: String, trim: true, required: true },
     status: { type: String, trim: true, required: false, default: "pending" },
     engineer: [],
+    remarks: [],
     deleted: { type: Boolean, trim: true, required: false, default: false },
     userId: {
         type: mongoose.Schema.Types.ObjectId,

@@ -7,6 +7,8 @@ const UserSchema = new mongoose.Schema({
     mobile: { type: String, trim: true, required: true, unique: true },
     email: { type: String, trim: true, required: true, unique: true },
     password: { type: String, trim: true, required: true },
+    current_address: { type: String, trim: true, required: true },
+    permanent_address: { type: String, trim: true, required: true },
     deactivated: { type: Boolean, trim: true, required: false, default: false },
 }, { timestamps: true })
 
