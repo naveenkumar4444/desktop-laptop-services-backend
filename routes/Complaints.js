@@ -51,7 +51,7 @@ router.post('/getallcomplaints', verifyToken, async (request, response) => {
         }
 
         const complaint = await ComplaintModel.find(condition)
-        console.log(condition);
+        // console.log(condition);
         response.status(200).send({
             status: true,
             message: 'Success',
